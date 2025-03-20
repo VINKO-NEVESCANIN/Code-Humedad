@@ -1,16 +1,13 @@
 from django.shortcuts import render
-from .forms import UploadFileForm
+from django.http import HttpResponse
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def upload_file(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            file = request.FILES["file"]
-            # TODO: Procesar el archivo aqui
-            return render(request, "upload.html", {"form": form, "success": True})
-        else:
-            form = UploadFileForm()
-            
-        return render(request, "upload.html", {'form': form})
-    
+  if request.method == "POST" and request.FILES.get("file"):
+      upload_file = request.FILES["file"]
+      fs = FileSystemStorage()
+      fs.save(upload_file.name, upload_file)
+      return HttpResponse("Archivo subido exitosamente")
+  
+  return render(request, "filtering/upload.html") # Renderizado de pagina HTML

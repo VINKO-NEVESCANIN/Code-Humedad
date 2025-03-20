@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from filtering.views import upload_file # Importar la vista
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", upload_file, name="upload_file") # La ruta raiz
 ]

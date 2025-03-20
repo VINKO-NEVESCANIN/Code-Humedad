@@ -4,13 +4,13 @@
 <div class="container mt-5">
     <h2>Cargar archivo Excel</h2>
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token % }
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Subir Archivo</button>
     </form>
 
     {% if success %}
-    <div class="alert alert-succes mt-3">
+    <div class="alert alert-success mt-3">
         Archivo subido exitosamente.
     </div>
     {% endif %}
