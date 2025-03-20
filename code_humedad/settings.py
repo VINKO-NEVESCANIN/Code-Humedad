@@ -78,8 +78,13 @@ WSGI_APPLICATION = 'code_humedad.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'USER': 'USAURIO',
+        'PASSWORD': 'CONTRASENA',
+        'HOST': 'localhost', # IP del servidor
+        'PORT': '5432',
+        
     }
 }
 
