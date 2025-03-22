@@ -9,7 +9,7 @@
     <body>
        <div class="container mt-5">
         <h2 class="mb-4">Subir Archivo</h2>
-        <form action="=" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'upload_file' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="file" class="form-control mb-3" required>
             <button type="submit" class="btn btn-primary">Subir</button>

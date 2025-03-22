@@ -16,9 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from filtering.views import upload_file # Importar la vista
+from filtering.views import upload_file, process_file # Importar la vista
+from django.conf.urls.static import static
+from django.conf import settings
+from filtering import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", upload_file, name="upload_file") # La ruta raiz
-]
+    path("", upload_file, name="upload_file"), # La ruta raiz
+    path("upload/", upload_file, name="upload_file"),
+    path("process/", process_file, name="process_file"),
+    path("process/", process_file, name="process_file"),
+    path('download/<str:filename>/', views.download_file, name='download_file'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
