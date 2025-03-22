@@ -1,33 +1,31 @@
+import os
 import pandas as pd
+from .forms import UploadFileForm
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-import os
+from urllib.parse import quote as urlquote
+
 
 def upload_file(request):
-    if request.method == "POST" and request.FILES.get("file"):
-        upload_file = request.FILES["file"]
-        fs = FileSystemStorage()
-        filename = fs.save(upload_file.name, upload_file)
-        file_path = fs.path(filename)
+    if request.method == 'POST' and request.FILES['file']:
+        file = request.FILES['file']
+        # Leer el archivo con pandas (puedes usar csv, excel, etc.)
+        df = pd.read_excel(file)  # o pd.read_csv(file) si es un CSV
+        columns = df.columns.tolist()  # Obtenemos los nombres de las columnas
 
-        # Leer el archivo con pandas
-        try:
-            df = pd.read_excel(file_path)
-        except Exception as e:
-            return HttpResponse(f"Error al leer el archivo: {str(e)}")
-
-        # Extraer nombres de columnas
-        columnas = df.columns.tolist()
-
+        # Generar el rango dinámicamente con el número de columnas
+        column_range = range(1, len(columns) + 1)
+        
         return render(request, "filtering/select_columns.html", {
-            "file_path": filename,
-            "columnas": columnas
+            "column_range": column_range,
+            "columns": columns,
+            "file_path": file.name  # O puedes guardar el archivo de alguna manera para luego descargarlo
         })
-
+    
     return render(request, "filtering/upload.html")
-
+  
 def highlight_temperatures(val, min_temp, max_temp):
     """Resalta valores fuera del rango."""
     if isinstance(val, (int, float)):
@@ -60,3 +58,13 @@ def process_file(request):
         })
 
     return HttpResponse("Método no permitido", status=405)
+  
+def download_file(request, filename):
+    file_path = os.path.join(settings.MEDIA_ROOT, filename)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename={urlquote(filename)}'
+            return response
+    else:
+        return HttpResponse("El archivo no existe.", status=404)

@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Mi App Django{% endblock %}</title>
+    <title>{% block title %}Aplicación para rangos de Temperatura{% endblock %}</title>
+    
+    <!-- Enlace de Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Enlace de Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -13,5 +18,22 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+
+    <!-- jQuery (necesario para Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Script de Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Inicialización de Select2 -->
+    <script>
+        $(document).ready(function() {
+            // Activar Select2 para cualquier select con clase 'select2'
+            $('select.select2').select2({
+                placeholder: "Selecciona una opción",
+                allowClear: true
+            });
+        });
+    </script>
 </body>
 </html>

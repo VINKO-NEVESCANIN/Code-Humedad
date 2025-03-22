@@ -14,19 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from filtering.views import upload_file, process_file # Importar la vista
-from django.conf.urls.static import static
+# urls.py
 from django.conf import settings
-from filtering import views
+from django.conf.urls.static import static
+from django.urls import path
+from filtering.views import upload_file, process_file, download_file
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", upload_file, name="upload_file"), # La ruta raiz
-    path("upload/", upload_file, name="upload_file"),
-    path("process/", process_file, name="process_file"),
-    path("process/", process_file, name="process_file"),
-    path('download/<str:filename>/', views.download_file, name='download_file'),
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('upload/', upload_file, name='upload_file'),
+    path('process/', process_file, name='process_file'),
+    path('download/<str:filename>/', download_file, name='download_file'),
+    # Otras rutas...
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
