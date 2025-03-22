@@ -10,7 +10,7 @@
         <div id="columns-container">
             <label for="temp_columns">Selecciona las columnas de temperatura:</label>
             <select name="temp_columns" class="form-control mb-3 select2" id="temp_columns" multiple="multiple">
-                {% for col in columnas %}
+                {% for col in columns %}
                     <option value="{{ col }}">{{ col }}</option>
                 {% endfor %}
             </select>
@@ -30,11 +30,12 @@
 <!-- Activar Select2 en el select -->
 <script>
     $(document).ready(function() {
-        $('#temp_columns').select2({
-            placeholder: "Selecciona las columnas",
+        $('select.select2').select2({
+            placeholder: "Selecciona una opción",
             allowClear: true
         });
     });
 </script>
+
 
 {% endblock %}
