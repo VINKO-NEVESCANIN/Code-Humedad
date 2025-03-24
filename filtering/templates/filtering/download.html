@@ -4,6 +4,6 @@
 <div class="container mt-5">
     <h2>Archivo procesado con éxito</h2>
     <p>El archivo ha sido procesado y resaltado correctamente. Descárgalo aquí:</p>
-    <a href="{{ MEDIA_URL }}{{ modified_file }}" class="btn btn-primary">Descargar archivo modificado</a>
+    <a href="{% url 'download_file' filename=modified_file %}" class="btn btn-success">Descargar archivo</a>
 </div>
 {% endblock %}
