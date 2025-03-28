@@ -14,6 +14,6 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Autodescubrimiento de tareas en todas las apps instaladas
 app.autodiscover_tasks(lambda: [app_config.name for app_config in apps.get_app_configs()])
 
-@app.task(bind=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')
+# @app.task(bind=True)
+# def debug_task(self):
+#     print(f'Request: {self.request!r}')
